@@ -1,0 +1,153 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>React读取和写入Excel表格 | H-blog</title>
+
+  
+  <meta name="author" content="Haoran Liang">
+  
+
+  
+  <meta name="description" content="想用React纯前端来读取并写入一个Excel文件可以通过React-xlsx包来实现https://github.com/SheetJS/sheetjs
+安装1$ npm install xlsx
+在文件头部引入XLSX包
+1import * as XLSX from &#39;xlsx&#39;;
+
+读取文件首">
+  
+
+  
+  
+  <meta name="keywords" content="Web,React">
+  
+
+  <meta id="viewport" name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+  <meta property="og:title" content="React读取和写入Excel表格"/>
+
+  <meta property="og:site_name" content="H-blog"/>
+
+  
+  <meta property="og:image" content="/favicon.ico"/>
+  
+
+  <link href="/favicon.ico" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="H-blog" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+
+<body>
+<div class="blog">
+  <div class="content">
+
+    <header>
+  <div class="site-branding">
+    <h1 class="site-title">
+      <a href="/">H-blog</a>
+    </h1>
+    <p class="site-description"></p>
+  </div>
+  <nav class="site-navigation">
+    <ul>
+      
+    </ul>
+  </nav>
+</header>
+
+    <main class="site-main posts-loop">
+    <article>
+
+  
+    
+    <h3 class="article-title"><span>React读取和写入Excel表格</span></h3>
+    
+  
+
+  <div class="article-top-meta">
+    <span class="posted-on">
+      <a href="/2020/02/03/React读取和写入Excel表格/" rel="bookmark">
+        <time class="entry-date published" datetime="2020-02-03T02:11:39.000Z">
+          2020-02-03
+        </time>
+      </a>
+    </span>
+  </div>
+
+
+  
+
+  <div class="article-content">
+    <div class="entry">
+      
+        <p>想用React纯前端来读取并写入一个Excel文件可以通过<code>React-xlsx</code>包来实现<br><a href="https://github.com/SheetJS/sheetjs" target="_blank" rel="noopener">https://github.com/SheetJS/sheetjs</a></p>
+<h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm install xlsx</span><br></pre></td></tr></table></figure>
+<p>在文件头部引入XLSX包</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> * <span class="keyword">as</span> XLSX <span class="keyword">from</span> <span class="string">'xlsx'</span>;</span><br></pre></td></tr></table></figure>
+
+<h3 id="读取文件"><a href="#读取文件" class="headerlink" title="读取文件"></a>读取文件</h3><p>首先通过HTML标签来上传一个文件，并绑定一个事件<code>onImportExcel</code></p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"file"</span> <span class="attr">accept</span>=<span class="string">".xlsx, .xls"</span> <span class="attr">onChange</span>=<span class="string">&#123;this.onImportExcel&#125;</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">onImportExcel = <span class="function">(<span class="params">file</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">// 获取选择的文件</span></span><br><span class="line">    <span class="keyword">const</span> &#123;files&#125; = file.target;</span><br><span class="line">    <span class="keyword">const</span> fileReader = <span class="keyword">new</span> FileReader();</span><br><span class="line"></span><br><span class="line">    fileReader.onload = <span class="function"><span class="params">event</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="keyword">const</span> &#123;result&#125; = event.target;</span><br><span class="line">            <span class="keyword">const</span> data = [];</span><br><span class="line">            </span><br><span class="line">            <span class="comment">// 通过xlsx获取文件二进制流</span></span><br><span class="line">            <span class="keyword">const</span> workbook = XLSX.read(result, &#123;<span class="attr">type</span>: <span class="string">'binary'</span>&#125;);</span><br><span class="line">            <span class="comment">// 获取第一个表格名</span></span><br><span class="line">            <span class="keyword">var</span> sheet_name = workbook.SheetNames[<span class="number">0</span>];</span><br><span class="line">            <span class="comment">// 获取Excel表中第一个sheet</span></span><br><span class="line">            <span class="keyword">var</span> worksheet = workbook.Sheets[sheet_name];</span><br><span class="line">            <span class="comment">// 获取表格内所有数据</span></span><br><span class="line">            data = XLSX.utils.sheet_to_json(worksheet, &#123;<span class="attr">header</span>: <span class="number">1</span>&#125;);</span><br><span class="line">             </span><br><span class="line">        &#125; <span class="keyword">catch</span>(e) &#123;</span><br><span class="line">            <span class="comment">// console.log("ERROR!");</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;;</span><br><span class="line">    fileReader.readAsBinaryString(files[<span class="number">0</span>]);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="写入文件"><a href="#写入文件" class="headerlink" title="写入文件"></a>写入文件</h3><p>通过<code>XLSX.utils</code>中的方法可以创建一个新的workbook并向其中写入数据</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 创建一个新的workbook</span></span><br><span class="line"><span class="keyword">var</span> wb = XLSX.utils.book_new();</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> ws_name = <span class="string">"Sheet1"</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 创建sheet</span></span><br><span class="line">vat ws_data = [</span><br><span class="line">    [<span class="string">"Cell-A-1"</span>, <span class="string">"Cell-B-1"</span>],</span><br><span class="line">    [<span class="string">"Data"</span>, <span class="string">"Data"</span>]</span><br><span class="line">];</span><br><span class="line"></span><br><span class="line"><span class="comment">// 将ws_data转化成worksheet</span></span><br><span class="line"><span class="keyword">var</span> ws = XLSX.utils.aoa_to_sheet(ws_data);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 将新的sheet添加到workbook中</span></span><br><span class="line">XLSX.utils.book_append_sheet(wb, ws, ws_name);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 最后输出生成的Excel文件</span></span><br><span class="line">XLSX.writeFile(workbook, <span class="string">'out.xlsx'</span>);</span><br></pre></td></tr></table></figure>
+      
+    </div>
+
+  </div>
+
+  <div class="article-footer">
+    <div class="article-meta pull-left">
+
+    
+      
+
+    <span class="post-categories">
+      <i class="icon-categories"></i>
+        <a href="/categories/React/">React</a>
+    </span>
+    
+
+    
+    
+
+    <span class="post-tags">
+      <i class="icon-tags"></i>
+        <a href="/tags/Web/">Web</a><a href="/tags/React/">React</a>
+    </span>
+    
+
+    </div>
+
+    
+  </div>
+</article>
+
+  
+
+
+
+
+
+
+    </main>
+
+    <footer class="site-footer">
+  <p class="site-info">
+    Proudly powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and
+    Theme by <a href="https://github.com/CodeDaraW/Hacker" target="_blank">Hacker</a>
+    </br>
+    
+    &copy; 2020 Haoran Liang
+    
+  </p>
+</footer>
+    
+  </div>
+</div>
+</body>
+</html>
