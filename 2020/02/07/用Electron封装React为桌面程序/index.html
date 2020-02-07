@@ -3,21 +3,26 @@
 <head>
   <meta charset="utf-8">
   
-  <title>H-blog</title>
+  <title>用Electron封装React为桌面程序 | H-blog</title>
 
   
   <meta name="author" content="Haoran Liang">
   
 
   
+  <meta name="description" content="参考资料：https://blog.csdn.net/qq_25881261/article/details/81559794https://segmentfault.com/a/1190000014030465https://www.electronjs.org/docs/tutorial/fir">
+  
 
+  
+  
+  <meta name="keywords" content="React,Electron">
   
 
   <meta id="viewport" name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
 
-  
+  <meta property="og:title" content="用Electron封装React为桌面程序"/>
 
   <meta property="og:site_name" content="H-blog"/>
 
@@ -50,12 +55,11 @@
 </header>
 
     <main class="site-main posts-loop">
-    
-  <article>
+    <article>
 
   
     
-    <h3 class="article-title"><a href="/2020/02/07/用Electron封装React为桌面程序/"><span>用Electron封装React为桌面程序</span></a></h3>
+    <h3 class="article-title"><span>用Electron封装React为桌面程序</span></h3>
     
   
 
@@ -140,138 +144,13 @@
   </div>
 </article>
 
-
-
-  <article>
-
-  
-    
-    <h3 class="article-title"><a href="/2020/02/03/React读取和写入Excel表格/"><span>React读取和写入Excel表格</span></a></h3>
-    
   
 
-  <div class="article-top-meta">
-    <span class="posted-on">
-      <a href="/2020/02/03/React读取和写入Excel表格/" rel="bookmark">
-        <time class="entry-date published" datetime="2020-02-03T02:11:39.000Z">
-          2020-02-03
-        </time>
-      </a>
-    </span>
-  </div>
-
-
-  
-
-  <div class="article-content">
-    <div class="entry">
-      
-        <p>想用React纯前端来读取并写入一个Excel文件可以通过<code>React-xlsx</code>包来实现<br><a href="https://github.com/SheetJS/sheetjs" target="_blank" rel="noopener">https://github.com/SheetJS/sheetjs</a></p>
-<h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm install xlsx</span><br></pre></td></tr></table></figure>
-<p>在文件头部引入XLSX包</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> * <span class="keyword">as</span> XLSX <span class="keyword">from</span> <span class="string">'xlsx'</span>;</span><br></pre></td></tr></table></figure>
-
-<h3 id="读取文件"><a href="#读取文件" class="headerlink" title="读取文件"></a>读取文件</h3><p>首先通过HTML标签来上传一个文件，并绑定一个事件<code>onImportExcel</code></p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"file"</span> <span class="attr">accept</span>=<span class="string">".xlsx, .xls"</span> <span class="attr">onChange</span>=<span class="string">&#123;this.onImportExcel&#125;</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">onImportExcel = <span class="function">(<span class="params">file</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">// 获取选择的文件</span></span><br><span class="line">    <span class="keyword">const</span> &#123;files&#125; = file.target;</span><br><span class="line">    <span class="keyword">const</span> fileReader = <span class="keyword">new</span> FileReader();</span><br><span class="line"></span><br><span class="line">    fileReader.onload = <span class="function"><span class="params">event</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="keyword">const</span> &#123;result&#125; = event.target;</span><br><span class="line">            <span class="keyword">const</span> data = [];</span><br><span class="line">            </span><br><span class="line">            <span class="comment">// 通过xlsx获取文件二进制流</span></span><br><span class="line">            <span class="keyword">const</span> workbook = XLSX.read(result, &#123;<span class="attr">type</span>: <span class="string">'binary'</span>&#125;);</span><br><span class="line">            <span class="comment">// 获取第一个表格名</span></span><br><span class="line">            <span class="keyword">var</span> sheet_name = workbook.SheetNames[<span class="number">0</span>];</span><br><span class="line">            <span class="comment">// 获取Excel表中第一个sheet</span></span><br><span class="line">            <span class="keyword">var</span> worksheet = workbook.Sheets[sheet_name];</span><br><span class="line">            <span class="comment">// 获取表格内所有数据</span></span><br><span class="line">            data = XLSX.utils.sheet_to_json(worksheet, &#123;<span class="attr">header</span>: <span class="number">1</span>&#125;);</span><br><span class="line">             </span><br><span class="line">        &#125; <span class="keyword">catch</span>(e) &#123;</span><br><span class="line">            <span class="comment">// console.log("ERROR!");</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;;</span><br><span class="line">    fileReader.readAsBinaryString(files[<span class="number">0</span>]);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="写入文件"><a href="#写入文件" class="headerlink" title="写入文件"></a>写入文件</h3><p>通过<code>XLSX.utils</code>中的方法可以创建一个新的workbook并向其中写入数据</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 创建一个新的workbook</span></span><br><span class="line"><span class="keyword">var</span> wb = XLSX.utils.book_new();</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> ws_name = <span class="string">"Sheet1"</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 创建sheet</span></span><br><span class="line">vat ws_data = [</span><br><span class="line">    [<span class="string">"Cell-A-1"</span>, <span class="string">"Cell-B-1"</span>],</span><br><span class="line">    [<span class="string">"Data"</span>, <span class="string">"Data"</span>]</span><br><span class="line">];</span><br><span class="line"></span><br><span class="line"><span class="comment">// 将ws_data转化成worksheet</span></span><br><span class="line"><span class="keyword">var</span> ws = XLSX.utils.aoa_to_sheet(ws_data);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 将新的sheet添加到workbook中</span></span><br><span class="line">XLSX.utils.book_append_sheet(wb, ws, ws_name);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 最后输出生成的Excel文件</span></span><br><span class="line">XLSX.writeFile(workbook, <span class="string">'out.xlsx'</span>);</span><br></pre></td></tr></table></figure>
-      
-    </div>
-
-  </div>
-
-  <div class="article-footer">
-    <div class="article-meta pull-left">
-
-    
-      
-
-    <span class="post-categories">
-      <i class="icon-categories"></i>
-        <a href="/categories/Web-Development/">Web Development</a>
-    </span>
-    
-
-    
-    
-
-    <span class="post-tags">
-      <i class="icon-tags"></i>
-        <a href="/tags/React/">React</a>
-    </span>
-    
-
-    </div>
-
-    
-  </div>
-</article>
-
-
-
-  <article>
-
-  
-    
-    <h3 class="article-title"><a href="/2019/10/28/Trie-Structure/"><span>Trie Structure</span></a></h3>
-    
-  
-
-  <div class="article-top-meta">
-    <span class="posted-on">
-      <a href="/2019/10/28/Trie-Structure/" rel="bookmark">
-        <time class="entry-date published" datetime="2019-10-27T16:16:33.000Z">
-          2019-10-28
-        </time>
-      </a>
-    </span>
-  </div>
-
-
-  
-
-  <div class="article-content">
-    <div class="entry">
-      
-        <p>Trie是一种特殊的Tree形式，用来存储String数据，每一个Trie node代表了<code>a string</code>。Trie结构多用于查找prefix。<br>一般的，我们使用创建一个TrieNode来表示Trie结构中的一个节点</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">TrieNode</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> size = <span class="number">26</span>;</span><br><span class="line">    <span class="keyword">public</span> TireNode[] children = <span class="keyword">new</span> TrieNode[size];</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">boolean</span> isWord;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Usage: </span></span><br><span class="line"><span class="comment">// Initialization: TrieNode root = new TrieNode();</span></span><br></pre></td></tr></table></figure>
-<p>因为我们使用了<code>array</code>来记录每一个TrieNode的子节点，那么访问每一个子节点就十分方便，但因为不是每一个节点都会包含所有26个字母的子节点，所以可能会浪费比较多的空间</p>
-<h2 id="基本操作"><a href="#基本操作" class="headerlink" title="基本操作"></a>基本操作</h2><h3 id="插入"><a href="#插入" class="headerlink" title="插入"></a>插入</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">insert</span><span class="params">(String word)</span> </span>&#123;</span><br><span class="line">    TrieNode current = root;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 对当前单词的每一个Char进行遍历</span></span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; word.length(); i++) &#123;</span><br><span class="line">        Character c = word.charAt(i);</span><br><span class="line">        <span class="keyword">if</span>(current.children[c - <span class="string">'a'</span>] == <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="comment">// 如果当前c不在子节点中，我们更新子节点</span></span><br><span class="line">            current.children[c - <span class="string">'a'</span>] = c;</span><br><span class="line">        &#125;</span><br><span class="line">        current = current.children[c - <span class="string">'a'</span>];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// isWord表示当前节点是插入的word的截至</span></span><br><span class="line">    current.isWord = <span class="keyword">true</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="查找"><a href="#查找" class="headerlink" title="查找"></a>查找</h3><h2 id="时间复杂度分析"><a href="#时间复杂度分析" class="headerlink" title="时间复杂度分析"></a>时间复杂度分析</h2>
-      
-    </div>
-
-  </div>
-
-  <div class="article-footer">
-    <div class="article-meta pull-left">
-
-    
-
-    
-    
-
-    <span class="post-tags">
-      <i class="icon-tags"></i>
-        <a href="/tags/Algorithm/">Algorithm</a>
-    </span>
-    
-
-    </div>
-
-    
-  </div>
-</article>
 
 
 
 
-<nav class="pagination">
-  
-  
-</nav>
+
     </main>
 
     <footer class="site-footer">
