@@ -154,11 +154,10 @@
         <div class="index-excerpt" >
           <div class="index-text mb-1">在使用npm安装electron时出现了卡在node install.js指令的情况不出意外应该是electron的安装源被墙掉了，所以需要给npm指定镜像的安装地址
 解决方法是在~/.npmrc文件中添加如下指令即可
-123; registry&#x3D;https:&#x2F;&#x2F;registry.npm.taobao.org; electron_mirror&#x3D;&quot;https:&#x2F;&#x2F;npm.taobao.org&#x2F;mirrors&#x2F;electron&#x2F;&quot;
+; registry=https://registry.npm.taobao.org
 
-~/.npmrc是npm的配置文件，如果不知道位置可以通过如下指令直接修改
-1npm config edit
-</div>
+; electron_mirror=&quot;https://npm.taobao.org/mirrors/electron/&quot;~/.npmrc是npm的配置文件，如果不知道位置可以通过如下指令直接修改
+npm config edit</div>
         </div>
       </a>
 
@@ -237,13 +236,18 @@ Electron是由Github开发，用HTML，CSS和JavaScript来构建跨平台桌面�
         
         <div class="index-excerpt" >
           <div class="index-text mb-1">想用React纯前端来读取并写入一个Excel文件可以通过React-xlsx包来实现https://github.com/SheetJS/sheetjs
-安装1$ npm install xlsx
-在文件头部引入XLSX包
-1import * as XLSX from 'xlsx';
-
+安装$ npm install xlsx在文件头部引入XLSX包
+import * as XLSX from &#39;xlsx&#39;;
 读取文件首先通过HTML标签来上传一个文件，并绑定一个事件onImportExcel
-1&lt;input type="file" accept=".xlsx, .xls" onChange=&#123;this.onImportExcel&#125;&gt;
-12345678910111213141516171819202122232425onImportExcel = (file) =&gt; &#123;    // 获取选择的文件    const &#123;files&#125; = file.target;    const fileReader = new FileReader();    fileReader.onload = event =&gt; &#123;        tr</div>
+&lt;input type=&quot;file&quot; accept=&quot;.xlsx, .xls&quot; onChange={this.onImportExcel}&gt;
+onImportExcel = (file) =&gt; {
+    // 获取选择的文件
+    const {files} = file.target;
+    const fileReader = new FileReader();
+
+    fileReader.onload = event =&gt; {
+        try {
+            const {result} = event.tar</div>
         </div>
       </a>
 
@@ -279,9 +283,21 @@ Electron是由Github开发，用HTML，CSS和JavaScript来构建跨平台桌面�
         
         <div class="index-excerpt" >
           <div class="index-text mb-1">Trie是一种特殊的Tree形式，用来存储String数据，每一个Trie node代表了a string。Trie结构多用于查找prefix。一般的，我们使用创建一个TrieNode来表示Trie结构中的一个节点
-123456789class TrieNode &#123;    public static final size = 26;    public TireNode[] children = new TrieNode[size];    public boolean isWord;    &#125;// Usage: // Initialization: TrieNode root = new TrieNode();
+class TrieNode {
+    public static final size = 26;
+    public TireNode[] children = new TrieNode[size];
+    public boolean isWord;
+
+}
+
+// Usage: 
+// Initialization: TrieNode root = new TrieNode();
 因为我们使用了array来记录每一个TrieNode的子节点，那么访问每一个子节点就十分方便，但因为不是每一个节点都会包含所有26个字母的子节点，所以可能会浪费比较多的空间
-基本操作插入123456789101112131415public void insert(String word) &#123;    TrieNode current = root</div>
+基本操作插入public void insert(String word) {
+    TrieNode current = root;
+
+    // 对当前单词的每一个Char进行遍历
+    for(int </div>
         </div>
       </a>
 

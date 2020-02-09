@@ -131,7 +131,7 @@
                   
                   &nbsp;<i class="far fa-chart-bar"></i>
                   <span class="post-count">
-                    258 字
+                    256 字
                   </span>&nbsp;
                 
 
@@ -173,9 +173,32 @@
         <div class="post-content mx-auto" id="post">
           <div class="markdown-body">
             <p>Trie是一种特殊的Tree形式，用来存储String数据，每一个Trie node代表了<code>a string</code>。Trie结构多用于查找prefix。<br>一般的，我们使用创建一个TrieNode来表示Trie结构中的一个节点</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">TrieNode</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> size = <span class="number">26</span>;</span><br><span class="line">    <span class="keyword">public</span> TireNode[] children = <span class="keyword">new</span> TrieNode[size];</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">boolean</span> isWord;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Usage: </span></span><br><span class="line"><span class="comment">// Initialization: TrieNode root = new TrieNode();</span></span><br></pre></td></tr></table></figure>
+<pre><code class="java">class TrieNode {
+    public static final size = 26;
+    public TireNode[] children = new TrieNode[size];
+    public boolean isWord;
+
+}
+
+// Usage: 
+// Initialization: TrieNode root = new TrieNode();</code></pre>
 <p>因为我们使用了<code>array</code>来记录每一个TrieNode的子节点，那么访问每一个子节点就十分方便，但因为不是每一个节点都会包含所有26个字母的子节点，所以可能会浪费比较多的空间</p>
-<h2 id="基本操作"><a href="#基本操作" class="headerlink" title="基本操作"></a>基本操作</h2><h3 id="插入"><a href="#插入" class="headerlink" title="插入"></a>插入</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">insert</span><span class="params">(String word)</span> </span>&#123;</span><br><span class="line">    TrieNode current = root;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 对当前单词的每一个Char进行遍历</span></span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; word.length(); i++) &#123;</span><br><span class="line">        Character c = word.charAt(i);</span><br><span class="line">        <span class="keyword">if</span>(current.children[c - <span class="string">'a'</span>] == <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="comment">// 如果当前c不在子节点中，我们更新子节点</span></span><br><span class="line">            current.children[c - <span class="string">'a'</span>] = c;</span><br><span class="line">        &#125;</span><br><span class="line">        current = current.children[c - <span class="string">'a'</span>];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// isWord表示当前节点是插入的word的截至</span></span><br><span class="line">    current.isWord = <span class="keyword">true</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="基本操作"><a href="#基本操作" class="headerlink" title="基本操作"></a>基本操作</h2><h3 id="插入"><a href="#插入" class="headerlink" title="插入"></a>插入</h3><pre><code class="java">public void insert(String word) {
+    TrieNode current = root;
+
+    // 对当前单词的每一个Char进行遍历
+    for(int i = 0; i &lt; word.length(); i++) {
+        Character c = word.charAt(i);
+        if(current.children[c - &#39;a&#39;] == null) {
+            // 如果当前c不在子节点中，我们更新子节点
+            current.children[c - &#39;a&#39;] = c;
+        }
+        current = current.children[c - &#39;a&#39;];
+    }
+    // isWord表示当前节点是插入的word的截至
+    current.isWord = true;
+}
+</code></pre>
 <h3 id="查找"><a href="#查找" class="headerlink" title="查找"></a>查找</h3><h2 id="时间复杂度分析"><a href="#时间复杂度分析" class="headerlink" title="时间复杂度分析"></a>时间复杂度分析</h2>
             <hr>
           </div>

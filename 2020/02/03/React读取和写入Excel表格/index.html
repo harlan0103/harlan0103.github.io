@@ -131,7 +131,7 @@
                   
                   &nbsp;<i class="far fa-chart-bar"></i>
                   <span class="post-count">
-                    295 字
+                    300 字
                   </span>&nbsp;
                 
 
@@ -173,16 +173,56 @@
         <div class="post-content mx-auto" id="post">
           <div class="markdown-body">
             <p>想用React纯前端来读取并写入一个Excel文件可以通过<code>React-xlsx</code>包来实现<br><a href="https://github.com/SheetJS/sheetjs" target="_blank" rel="noopener">https://github.com/SheetJS/sheetjs</a></p>
-<h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm install xlsx</span><br></pre></td></tr></table></figure>
-<p>在文件头部引入XLSX包</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> * <span class="keyword">as</span> XLSX <span class="keyword">from</span> <span class="string">'xlsx'</span>;</span><br></pre></td></tr></table></figure>
-
+<h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><pre><code>$ npm install xlsx</code></pre><p>在文件头部引入XLSX包</p>
+<pre><code class="javascript">import * as XLSX from &#39;xlsx&#39;;</code></pre>
 <h3 id="读取文件"><a href="#读取文件" class="headerlink" title="读取文件"></a>读取文件</h3><p>首先通过HTML标签来上传一个文件，并绑定一个事件<code>onImportExcel</code></p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"file"</span> <span class="attr">accept</span>=<span class="string">".xlsx, .xls"</span> <span class="attr">onChange</span>=<span class="string">&#123;this.onImportExcel&#125;</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">onImportExcel = <span class="function">(<span class="params">file</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="comment">// 获取选择的文件</span></span><br><span class="line">    <span class="keyword">const</span> &#123;files&#125; = file.target;</span><br><span class="line">    <span class="keyword">const</span> fileReader = <span class="keyword">new</span> FileReader();</span><br><span class="line"></span><br><span class="line">    fileReader.onload = <span class="function"><span class="params">event</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="keyword">const</span> &#123;result&#125; = event.target;</span><br><span class="line">            <span class="keyword">const</span> data = [];</span><br><span class="line">            </span><br><span class="line">            <span class="comment">// 通过xlsx获取文件二进制流</span></span><br><span class="line">            <span class="keyword">const</span> workbook = XLSX.read(result, &#123;<span class="attr">type</span>: <span class="string">'binary'</span>&#125;);</span><br><span class="line">            <span class="comment">// 获取第一个表格名</span></span><br><span class="line">            <span class="keyword">var</span> sheet_name = workbook.SheetNames[<span class="number">0</span>];</span><br><span class="line">            <span class="comment">// 获取Excel表中第一个sheet</span></span><br><span class="line">            <span class="keyword">var</span> worksheet = workbook.Sheets[sheet_name];</span><br><span class="line">            <span class="comment">// 获取表格内所有数据</span></span><br><span class="line">            data = XLSX.utils.sheet_to_json(worksheet, &#123;<span class="attr">header</span>: <span class="number">1</span>&#125;);</span><br><span class="line">             </span><br><span class="line">        &#125; <span class="keyword">catch</span>(e) &#123;</span><br><span class="line">            <span class="comment">// console.log("ERROR!");</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;;</span><br><span class="line">    fileReader.readAsBinaryString(files[<span class="number">0</span>]);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<pre><code class="html">&lt;input type=&quot;file&quot; accept=&quot;.xlsx, .xls&quot; onChange={this.onImportExcel}&gt;</code></pre>
+<pre><code class="javascript">onImportExcel = (file) =&gt; {
+    // 获取选择的文件
+    const {files} = file.target;
+    const fileReader = new FileReader();
 
+    fileReader.onload = event =&gt; {
+        try {
+            const {result} = event.target;
+            const data = [];
+
+            // 通过xlsx获取文件二进制流
+            const workbook = XLSX.read(result, {type: &#39;binary&#39;});
+            // 获取第一个表格名
+            var sheet_name = workbook.SheetNames[0];
+            // 获取Excel表中第一个sheet
+            var worksheet = workbook.Sheets[sheet_name];
+            // 获取表格内所有数据
+            data = XLSX.utils.sheet_to_json(worksheet, {header: 1});
+
+        } catch(e) {
+            // console.log(&quot;ERROR!&quot;);
+        }
+    };
+    fileReader.readAsBinaryString(files[0]);
+}</code></pre>
 <h3 id="写入文件"><a href="#写入文件" class="headerlink" title="写入文件"></a>写入文件</h3><p>通过<code>XLSX.utils</code>中的方法可以创建一个新的workbook并向其中写入数据</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 创建一个新的workbook</span></span><br><span class="line"><span class="keyword">var</span> wb = XLSX.utils.book_new();</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> ws_name = <span class="string">"Sheet1"</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 创建sheet</span></span><br><span class="line">vat ws_data = [</span><br><span class="line">    [<span class="string">"Cell-A-1"</span>, <span class="string">"Cell-B-1"</span>],</span><br><span class="line">    [<span class="string">"Data"</span>, <span class="string">"Data"</span>]</span><br><span class="line">];</span><br><span class="line"></span><br><span class="line"><span class="comment">// 将ws_data转化成worksheet</span></span><br><span class="line"><span class="keyword">var</span> ws = XLSX.utils.aoa_to_sheet(ws_data);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 将新的sheet添加到workbook中</span></span><br><span class="line">XLSX.utils.book_append_sheet(wb, ws, ws_name);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 最后输出生成的Excel文件</span></span><br><span class="line">XLSX.writeFile(workbook, <span class="string">'out.xlsx'</span>);</span><br></pre></td></tr></table></figure>
+<pre><code class="javascript">// 创建一个新的workbook
+var wb = XLSX.utils.book_new();
+
+var ws_name = &quot;Sheet1&quot;;
+
+// 创建sheet
+vat ws_data = [
+    [&quot;Cell-A-1&quot;, &quot;Cell-B-1&quot;],
+    [&quot;Data&quot;, &quot;Data&quot;]
+];
+
+// 将ws_data转化成worksheet
+var ws = XLSX.utils.aoa_to_sheet(ws_data);
+
+// 将新的sheet添加到workbook中
+XLSX.utils.book_append_sheet(wb, ws, ws_name);
+
+// 最后输出生成的Excel文件
+XLSX.writeFile(workbook, &#39;out.xlsx&#39;);</code></pre>
+
             <hr>
           </div>
           <br>

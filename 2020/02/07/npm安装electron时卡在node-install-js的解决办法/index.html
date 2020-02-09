@@ -131,7 +131,7 @@
                   
                   &nbsp;<i class="far fa-chart-bar"></i>
                   <span class="post-count">
-                    121 字
+                    111 字
                   </span>&nbsp;
                 
 
@@ -174,11 +174,10 @@
           <div class="markdown-body">
             <p>在使用npm安装electron时出现了卡在<code>node install.js</code>指令的情况<br>不出意外应该是electron的安装源被墙掉了，所以需要给npm指定镜像的安装地址</p>
 <p>解决方法是在<code>~/.npmrc</code>文件中添加如下指令即可</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">; registry&#x3D;https:&#x2F;&#x2F;registry.npm.taobao.org</span><br><span class="line"></span><br><span class="line">; electron_mirror&#x3D;&quot;https:&#x2F;&#x2F;npm.taobao.org&#x2F;mirrors&#x2F;electron&#x2F;&quot;</span><br></pre></td></tr></table></figure>
+<pre><code>; registry=https://registry.npm.taobao.org
 
-<p><code>~/.npmrc</code>是npm的配置文件，如果不知道位置可以通过如下指令直接修改</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm config edit</span><br></pre></td></tr></table></figure>
-
+; electron_mirror=&quot;https://npm.taobao.org/mirrors/electron/&quot;</code></pre><p><code>~/.npmrc</code>是npm的配置文件，如果不知道位置可以通过如下指令直接修改</p>
+<pre><code>npm config edit</code></pre>
             <hr>
           </div>
           <br>
