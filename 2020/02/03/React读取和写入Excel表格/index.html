@@ -27,6 +27,8 @@
 
 
 
+  <link rel="stylesheet" href="/lib/prettify/tomorrow-night-eighties.min.css"  >
+
 <link rel="stylesheet" href="/css/main.css"  >
 
 
@@ -379,6 +381,14 @@ XLSX.writeFile(workbook, &#39;out.xlsx&#39;);</code></pre>
   
 
 
+
+  <script src="/lib/prettify/prettify.min.js" ></script>
+  <script>
+    $(document).ready(function () {
+      $('pre').addClass('prettyprint  ');
+      prettyPrint();
+    })
+  </script>
 
 
 

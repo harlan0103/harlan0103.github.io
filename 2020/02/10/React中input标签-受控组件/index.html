@@ -16,7 +16,7 @@
   <meta name="description" content="">
   <meta name="author" content="Haoran Liang">
   <meta name="keywords" content="">
-  <title>Archives ~ H-blog</title>
+  <title>React中input标签-受控组件 ~ H-blog</title>
 
   <link rel="stylesheet" href="/lib/font-awesome/css/all.min.css"  >
 <link rel="stylesheet" href="/lib/bootstrap/css/bootstrap.min.css"  >
@@ -39,7 +39,7 @@
 
 
 <body>
-  <header style="height: 80vh;">
+  <header style="height: 70vh;">
     <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
   <div class="container">
     <a class="navbar-brand"
@@ -118,6 +118,41 @@
             </span>
 
             
+              <br>
+              
+                <p class="mt-3">
+                  <i class="fas fa-calendar-alt" aria-hidden="true"></i>&nbsp;
+                  Monday, February 10th 2020, 8:45 pm
+                </p>
+              
+
+              <p>
+                
+                  
+                  &nbsp;<i class="far fa-chart-bar"></i>
+                  <span class="post-count">
+                    651 字
+                  </span>&nbsp;
+                
+
+                
+                  
+                  &nbsp;<i class="far fa-clock"></i>
+                  <span class="post-count">
+                      2 分钟
+                  </span>&nbsp;
+                
+
+                
+                  <!-- 不蒜子统计文章PV -->
+                  
+                  &nbsp;<i class="far fa-eye" aria-hidden="true"></i>&nbsp;
+                  <span id="busuanzi_container_page_pv">
+                    <span id="busuanzi_value_page_pv"></span> 次
+                  </span>&nbsp;
+                
+              </p>
+            
           </div>
 
           
@@ -128,53 +163,86 @@
 
   <main>
     
-      <div class="container nopadding-md">
-        <div class="py-5 z-depth-3" id="board">
-          
-          <div class="container">
-            <div class="row">
-              <div class="col-12 col-md-10 m-auto">
-                
-
-<div class="list-group">
-  <p class="h4">5 posts in total.</p>
-  <hr>
-  
-    
       
-      <p class="h5">2020</p>
-    
-    <a href="/2020/02/10/React%E4%B8%ADinput%E6%A0%87%E7%AD%BE-%E5%8F%97%E6%8E%A7%E7%BB%84%E4%BB%B6/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">React中input标签-受控组件</span>
-      <span style="float: right;">02-10</span>
-    </a>
-  
-    
-    <a href="/2020/02/07/npm%E5%AE%89%E8%A3%85electron%E6%97%B6%E5%8D%A1%E5%9C%A8node-install-js%E7%9A%84%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">npm安装electron时卡在node install.js的解决办法</span>
-      <span style="float: right;">02-07</span>
-    </a>
-  
-    
-    <a href="/2020/02/07/%E7%94%A8Electron%E5%B0%81%E8%A3%85React%E4%B8%BA%E6%A1%8C%E9%9D%A2%E7%A8%8B%E5%BA%8F/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">用Electron封装React为桌面程序</span>
-      <span style="float: right;">02-07</span>
-    </a>
-  
-    
-    <a href="/2020/02/03/React%E8%AF%BB%E5%8F%96%E5%92%8C%E5%86%99%E5%85%A5Excel%E8%A1%A8%E6%A0%BC/" class="list-group-item list-group-item-action">
-      <span class="archive-post-title">React读取和写入Excel表格</span>
-      <span style="float: right;">02-03</span>
-    </a>
-  
-</div>
 
+<div class="container-fluid">
+  <div class="row">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-md">
+      <div class="py-5 z-depth-3" id="board">
+        <div class="post-content mx-auto" id="post">
+          <div class="markdown-body">
+            <p>Reference:<br><a href="https://segmentfault.com/a/1190000002675685" target="_blank" rel="noopener">https://segmentfault.com/a/1190000002675685</a><br><a href="https://segmentfault.com/q/1010000008144015" target="_blank" rel="noopener">https://segmentfault.com/q/1010000008144015</a><br><a href="https://stackoverflow.com/questions/43556212/failed-form-proptype-you-provided-a-value-prop-to-a-form-field-without-an-on" target="_blank" rel="noopener">https://stackoverflow.com/questions/43556212/failed-form-proptype-you-provided-a-value-prop-to-a-form-field-without-an-on</a><br><a href="http://shouce.jb51.net/react/tips/controlled-input-null-value.html" target="_blank" rel="noopener">http://shouce.jb51.net/react/tips/controlled-input-null-value.html</a></p>
+<p>今天在做一个用户能够更新数据的表单的时候遇到了几个问题</p>
+<h3 id="input-受控组件"><a href="#input-受控组件" class="headerlink" title="input 受控组件"></a>input 受控组件</h3><p>在表单中有一个<code>input</code>标签，我希望是在页面加载的时候首先从后端数据库获取当前页面对应的数据，并将某个数据放入这个<code>input</code>标签中。<br>之后用户能够更改这个<code>input</code>的value并且能够将表单中所有更新的值都在数据库端进行更新。</p>
+<p>在给<code>&lt;input value={this.state.value}&gt;</code>赋值之后控制台出现了以下的warning</p>
+<blockquote>
+<p>Warning: A component is changing an uncontrolled input of type text to be controlled. Input elements should not switch from uncontrolled to controlled (or vice versa). Decide between using a controlled or uncontrolled input element for the lifetime of the component.</p>
+</blockquote>
+<p>随即查了一下。所谓<code>controlled component - 受控组件</code>在这里指的就是被赋了值的<code>input</code>标签，也就是:</p>
+<pre><code class="html">&lt;input value={this.state.some_value}&gt;</code></pre>
+<p>这时候组件受控，所以<code>input</code>标签中会一直显示所赋予的值。<br>当页面被渲染之后，用户是无法更改<code>input</code>标签中的值的，这也是我尝试去删除或者修改这个<code>input</code>标签都无效的原因</p>
+<p>如果想要随着用户的输入而改变值的话，可以使用<code>onChange</code>事件:</p>
+<pre><code class="html">&lt;input value={this.state.some_value} onChange={e =&gt; this.setState({some_value: e.target.value})}&gt;</code></pre>
+<p>这样，<code>input</code>标签就是可以更改的了，而且能够跟着用户的输入来更改<code>state</code>中对应的值</p>
+<p>后来在添加了<code>onChange</code>事件后发现仍然无法删除或者修改<code>input</code>中的内容，并且控制台也没有任何报错或者警告<br>查找了半天后发现原来<code>input</code>标签中赋值的对象和<code>onChange</code>事件中改变值后更新的对象不是同一个<br>也就是每次被修改的并不是<code>input</code>内的值，所以才会出现无论怎么改动值都不会更新的情况</p>
+<h3 id="input-defaultValue"><a href="#input-defaultValue" class="headerlink" title="input defaultValue"></a>input defaultValue</h3><p>后来在给一个<code>input</code>设置默认且不能更改的值时遇到了以下warning:</p>
+<blockquote>
+<p>Warning: Failed prop type: You provided a <code>value</code> prop to a form field without an <code>onChange</code> handler. This will render a read-only field. If the field should be mutable use <code>defaultValue</code>. Otherwise, set either <code>onChange</code> or <code>readOnly</code>.</p>
+</blockquote>
+<p>这里是当一个<code>input</code>标签中的内容不会被用户所更改时，应该将<code>value</code>改成<code>defaultvalue</code>以此来达到read-only的效果<br>如果用户需要对这个标签进行修改那么就像之前说的那样加上<code>onChange</code>事件</p>
 
-              </div>
-            </div>
+            <hr>
+          </div>
+          <br>
+          <div>
+            <p>
+            
+              <span>
+                <i class="iconfont icon-inbox"></i>
+                
+                  <a class="hover-with-bg" href="/categories/Web%20Development">Web Development</a>
+                  &nbsp;
+                
+              </span>&nbsp;&nbsp;
+            
+            
+              <span>
+                <i class="iconfont icon-tag"></i>
+                
+                  <a class="hover-with-bg" href="/tags/React">React</a>
+                
+              </span>
+            
+            </p>
+            
+              <p class="note note-warning">本博客所有文章除特别声明外，均采用 <a href="https://zh.wikipedia.org/wiki/Wikipedia:CC_BY-SA_3.0%E5%8D%8F%E8%AE%AE%E6%96%87%E6%9C%AC" target="_blank" rel="nofollow noopener noopener">CC BY-SA 3.0协议</a> 。转载请注明出处！</p>
+            
           </div>
         </div>
       </div>
+    </div>
+    <div class="d-none d-lg-block col-lg-2 toc-container">
+      
+  <div id="toc">
+    <p class="h4"><i class="far fa-list-alt"></i>&nbsp;TOC</p>
+    <div id="tocbot"></div>
+  </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- custom -->
+
+
+<!-- Comments -->
+<div class="col-lg-7 mx-auto nopadding-md">
+  <div class="container comments mx-auto" id="comments">
+    
+  </div>
+</div>
+
     
   </main>
 
@@ -253,6 +321,11 @@
 
 
 
+  
+    <script src="/lib/tocbot/tocbot.min.js" ></script>
+  
+  <script src="/js/post.js" ></script>
+
 
 
   <script src="/lib/smooth-scroll/smooth-scroll.min.js" ></script>
@@ -293,7 +366,7 @@
     var typed = new Typed('#subtitle', {
       strings: [
         '  ',
-        "Archive&nbsp;",
+        "React中input标签-受控组件&nbsp;",
       ],
       cursorChar: "_",
       typeSpeed: 70,

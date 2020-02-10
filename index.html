@@ -27,6 +27,8 @@
 
 
 
+  <link rel="stylesheet" href="/lib/prettify/tomorrow-night-eighties.min.css"  >
+
 <link rel="stylesheet" href="/css/main.css"  >
 
 
@@ -138,6 +140,46 @@
               <div class="col-12 col-md-10 m-auto">
                 
 
+
+  <div class="row mb-4 mx-auto">
+    
+    
+    <div class="col-12 col-md-8 m-auto">
+      <a href="/2020/02/10/React%E4%B8%ADinput%E6%A0%87%E7%AD%BE-%E5%8F%97%E6%8E%A7%E7%BB%84%E4%BB%B6/">
+        <p class="h4 index-header">React中input标签-受控组件</p>
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">Reference:https://segmentfault.com/a/1190000002675685https://segmentfault.com/q/1010000008144015https://stackoverflow.com/questions/43556212/failed-form-proptype-you-provided-a-value-prop-to-a-form-field-without-an-onhttp://shouce.jb51.net/react/tips/controlled-input-null-value.html
+今天在做一个用户能够更新数据的表单的时候遇到了几个问题
+input 受控组件在表单中有一个input标签，我希望是在页面加载的时候首先从后端数据库获取当前页面对应的数据，并将某个数据放入这个input标签中。之后用户能够更改这个input的value并且能够将表单中所有更新的值都在数据库端进行更新。
+在给&lt;input value={this.state.value}&gt;赋值之后控制台出现了以下的warning
+
+War</div>
+        </div>
+      </a>
+
+      <div>
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2020-02-10&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/Web%20Development">Web Development</a>&nbsp;
+          &nbsp;
+        
+        
+          <i class="iconfont icon-tag"></i>
+          
+            <a href="/tags/React">React</a>&nbsp;
+          
+        
+      </div>
+    </div>
+  </div>
 
   <div class="row mb-4 mx-auto">
     
@@ -425,6 +467,14 @@ class TrieNode {
   
 
 
+
+  <script src="/lib/prettify/prettify.min.js" ></script>
+  <script>
+    $(document).ready(function () {
+      $('pre').addClass('prettyprint  ');
+      prettyPrint();
+    })
+  </script>
 
 
 
