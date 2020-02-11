@@ -131,7 +131,7 @@
                   
                   &nbsp;<i class="far fa-chart-bar"></i>
                   <span class="post-count">
-                    1k 字
+                    1.1k 字
                   </span>&nbsp;
                 
 
@@ -139,7 +139,7 @@
                   
                   &nbsp;<i class="far fa-clock"></i>
                   <span class="post-count">
-                      3 分钟
+                      4 分钟
                   </span>&nbsp;
                 
 
@@ -187,6 +187,7 @@ npm install module-name --save-dev</code></pre><p>第一种是将模块安装到
 <p>在Electron打包的过程中，是不会将<code>devDependencies</code>中的模块复制到打包文件中的，所以将一些开发用的模块放到<code>devDependencies</code>中也可以起到减小最终程序大小的效果</p>
 <h4 id="其他方法"><a href="#其他方法" class="headerlink" title="其他方法"></a>其他方法</h4><p>还有一些方法比如<code>electron-builder</code>的two package.json方法，因为我使用的不是这个打包方式，所以也不太清楚这种方法的效果<br>另一种方法是之前提到的文章的作者开发了一款叫做<code>Electrino</code>的框架，用的是操作系统自带的浏览器内核，比如Windows系统就使用的是Microsoft Edge Browser来作为内核，但是由于这个框架还在开发中，有很多api都不太全，但是可以一试</p>
 <h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>总之，使用Electron这种跨平台框架来开发桌面应用本来就是一中不算太正确或者不太成熟的做法，毕竟很多桌面开发框架都很成熟而且速度很快。但Electron的确给熟悉前端技术的开发者一个好的平台来开发桌面应用<br>毕竟省去了搞服务器和公共域名的麻烦，而且也不用用户自己输入<code>npm start</code>来运行Web app</p>
+<h3 id="Reference"><a href="#Reference" class="headerlink" title="Reference:"></a>Reference:</h3><p><a href="https://medium.com/dailyjs/put-your-electron-app-on-a-diet-with-electrino-c7ffdf1d6297" target="_blank" rel="noopener">https://medium.com/dailyjs/put-your-electron-app-on-a-diet-with-electrino-c7ffdf1d6297</a><br><a href="https://stackoverflow.com/questions/47597283/electron-package-reduce-the-package-size" target="_blank" rel="noopener">https://stackoverflow.com/questions/47597283/electron-package-reduce-the-package-size</a><br><a href="https://stackoverflow.com/questions/21122342/how-to-clean-node-modules-folder-of-packages-that-are-not-in-package-json" target="_blank" rel="noopener">https://stackoverflow.com/questions/21122342/how-to-clean-node-modules-folder-of-packages-that-are-not-in-package-json</a><br><a href="https://www.jianshu.com/p/de3f9a53d2a9" target="_blank" rel="noopener">https://www.jianshu.com/p/de3f9a53d2a9</a></p>
 
             <hr>
           </div>
