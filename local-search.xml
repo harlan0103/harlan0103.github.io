@@ -4,6 +4,33 @@
   
   
   <entry>
+    <title>减小Electron应用打包后的体积</title>
+    <link href="/2020/02/11/%E5%87%8F%E5%B0%8FElectron%E5%BA%94%E7%94%A8%E6%89%93%E5%8C%85%E5%90%8E%E7%9A%84%E4%BD%93%E7%A7%AF/"/>
+    <url>/2020/02/11/%E5%87%8F%E5%B0%8FElectron%E5%BA%94%E7%94%A8%E6%89%93%E5%8C%85%E5%90%8E%E7%9A%84%E4%BD%93%E7%A7%AF/</url>
+    
+    <content type="html"><![CDATA[<p>Electron可以说是给那些对前端技术比较熟悉的开发人员进行桌面应用开发的一个比较好的框架<br>但是Electron打包之后的文件大小实在是有点过于庞大，对于一个没有太多功能的app居然达到了300mb！<br>在对打包后的文件进行查询后发现占用体积最大的部分就是React应用中的<code>node_modules</code><br>因为使用的是<code>electron-packager</code>进行的打包，所以打包后的程序基本上是完整拷贝了<code>node_modules</code>中的所有文件<br>但是除了React的那部分外，还有很大的一部分空间被占用了</p><blockquote><p>The downside of the Electron approach is that each app comes with a copy of two large software frameworks, Node.js and Chromium.<br>So, each Electron app essentially carries an operating system with it.</p></blockquote><p>就像<a href="https://medium.com/dailyjs/put-your-electron-app-on-a-diet-with-electrino-c7ffdf1d6297" target="_blank" rel="noopener">Put your Electron app on a diet with Electrino</a>这篇文章讲的那样，因为Electron的内核使用的是<code>Chromium</code>同时还加载了所有的<code>node_modules</code>，基本上一款Electron应用里面就用到了两大框架，所以即便是一个简单的<code>hello_world.js</code>被Electron打包出来后都会有100mb以上的大小</p><h3 id="减小node-modules的体积"><a href="#减小node-modules的体积" class="headerlink" title="减小node_modules的体积"></a>减小node_modules的体积</h3><p>因为<code>Chromium</code>内核的文件是不能删除的，而在打包过程中产生的文件也是不能删掉的，所以比较现实的方法就是尽可能的减少<code>node_modules</code>里面的文件</p><h4 id="删除多余的package"><a href="#删除多余的package" class="headerlink" title="删除多余的package"></a>删除多余的package</h4><p>在开发的过程中，有可能会使用一些新的依赖项来顶替掉原来使用的依赖项，这个时候<code>node_modules</code>就会越来越大，所以在<code>package.json</code>文件中会有一大长串的<code>dependencies</code>，但是在应用中却没有被引用<br>这时候就需要清理<code>node_modules</code>，比较暴力的方法就是删除整个文件，然后<code>npm install</code>来安装所有在<code>package.json</code>中的依赖项。同时也可以使用<code>npm prune --</code>指令<br><code>prune</code>主要是来移除无关的包，可以提供需要被移除的包名</p><pre><code>npm prune [[&lt;@scope&gt;/]&lt;pkg&gt;...] [--production] [--dry-run] [--json]</code></pre><h4 id="将dependencies转移devDependencies中"><a href="#将dependencies转移devDependencies中" class="headerlink" title="将dependencies转移devDependencies中"></a>将dependencies转移devDependencies中</h4><p>在安装一个包的时候，可以有以下两种方法</p><pre><code>npm install module-name --savenpm install module-name --save-dev</code></pre><p>第一种是将模块安装到<code>dependencies</code>中<br>第二种是将模块安装到<code>devDependencies</code>中</p><p>dependencies代表的是生产环境，也就是程序运行时所需要调用到的包<br>而devDependencies代表的是开发环境，可以理解为开发程序中所需要的包</p><p>比如Electron就是开发环境，我们需要Electron来将我们的React App打包成桌面应用，但是我们在运行我们的桌面应用时是不需要Electron的，所以Electron可以被放在<code>devDependencies</code><br>再或者<code>react-router</code>，是React应用进行页面跳转用的模块，因为我们程序运行需要页面跳转，如果程序无法调用到这个模块，那就会报错，所以这个模块就是生产环境</p><p>在Electron打包的过程中，是不会将<code>devDependencies</code>中的模块复制到打包文件中的，所以将一些开发用的模块放到<code>devDependencies</code>中也可以起到减小最终程序大小的效果</p><h4 id="其他方法"><a href="#其他方法" class="headerlink" title="其他方法"></a>其他方法</h4><p>还有一些方法比如<code>electron-builder</code>的two package.json方法，因为我使用的不是这个打包方式，所以也不太清楚这种方法的效果<br>另一种方法是之前提到的文章的作者开发了一款叫做<code>Electrino</code>的框架，用的是操作系统自带的浏览器内核，比如Windows系统就使用的是Microsoft Edge Browser来作为内核，但是由于这个框架还在开发中，有很多api都不太全，但是可以一试</p><h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>总之，使用Electron这种跨平台框架来开发桌面应用本来就是一中不算太正确或者不太成熟的做法，毕竟很多桌面开发框架都很成熟而且速度很快。但Electron的确给熟悉前端技术的开发者一个好的平台来开发桌面应用<br>毕竟省去了搞服务器和公共域名的麻烦，而且也不用用户自己输入<code>npm start</code>来运行Web app</p>]]></content>
+    
+    
+    <categories>
+      
+      <category>Web Development</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>React</tag>
+      
+      <tag>Electron</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>React中input标签-受控组件</title>
     <link href="/2020/02/10/React%E4%B8%ADinput%E6%A0%87%E7%AD%BE-%E5%8F%97%E6%8E%A7%E7%BB%84%E4%BB%B6/"/>
     <url>/2020/02/10/React%E4%B8%ADinput%E6%A0%87%E7%AD%BE-%E5%8F%97%E6%8E%A7%E7%BB%84%E4%BB%B6/</url>
