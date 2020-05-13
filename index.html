@@ -145,6 +145,54 @@
     
     
     <div class="col-12 col-md-8 m-auto">
+      <a href="/2020/05/13/%E5%8F%AF%E9%9D%A0%E6%95%B0%E6%8D%AE%E4%BC%A0%E8%BE%93/">
+        <p class="h4 index-header">可靠数据传输</p>
+        
+        
+          
+        
+        <div class="index-excerpt" >
+          <div class="index-text mb-1">可靠数据传输原理可靠数据传输： 传输数据由一条可靠信道进行传输，传输数据比特不会受到损坏 (由0变成1，或者相反) 或丢失，而且所有数据都是按照其发送顺序进行交付。
+实现可靠传输服务抽象是可靠数据传输协议(reliable data transfer protocol) 的责任。可靠数据传输协议的下层协议也许是不可靠的。比如TCP是在不可靠的IP端到端网络层之上实现的可靠数据传输协议。
+
+a) 对于运输层内的可靠信道，进程可以直接通过可靠信道进行分组交换
+b) 对于底层的不可靠传输，进程需要在运输层使用可靠数据传输协议来放置比特丢失或翻转
+可靠数据传输协议服务实现
+
+
+redt_send()：由数据发送方进程调用，向可靠数据传输协议较高层发送数据
+udt_send()： 由rdt调用，将数据通过不可靠信道传输给接收方
+rdt_rcv()：由接收方的rdt调用，从不可靠信道中取出到达的分组
+deliver_data()：由接收方的rdt调用，负责将分组中的数据发送给用户进程
+
+构造可靠传输协议经完全可靠信道的可靠数据传输：rdt1.0首先考虑最简单的情况，即底层信道是完全可靠的。我们称该</div>
+        </div>
+      </a>
+
+      <div>
+        
+          <i class="iconfont icon-riqi2"></i>&nbsp;2020-05-13&nbsp;&nbsp;
+        
+        
+          <i class="iconfont icon-inbox"></i>
+          
+            <a href="/categories/Computer%20Networking">Computer Networking</a>&nbsp;
+          &nbsp;
+        
+        
+          <i class="iconfont icon-tag"></i>
+          
+            <a href="/tags/Protocol">Protocol</a>&nbsp;
+          
+        
+      </div>
+    </div>
+  </div>
+
+  <div class="row mb-4 mx-auto">
+    
+    
+    <div class="col-12 col-md-8 m-auto">
       <a href="/2020/02/11/%E5%87%8F%E5%B0%8FElectron%E5%BA%94%E7%94%A8%E6%89%93%E5%8C%85%E5%90%8E%E7%9A%84%E4%BD%93%E7%A7%AF/">
         <p class="h4 index-header">减小Electron应用打包后的体积</p>
         
